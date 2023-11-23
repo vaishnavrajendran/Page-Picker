@@ -1,26 +1,16 @@
 import React from "react";
-import { useEffect } from "react";
 
 import Header from "@/components/Header";
-import { getUserDocs } from "@/lib/requests";
-import { useState } from "react";
 import DocsContainer from "../DocsContainer";
+import { getDocs } from "@/providers/DocsProvider";
 
-const HomePage = ({ user }) => {
-  const [userDocs, setUserDocs] = useState([]);
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getUserDocs(user.userId);
-      setUserDocs(data);
-    };
-
-    fetchData();
-  }, []);
+const HomePage = () => {
+  const { docs } = getDocs();
 
   return (
-    <div className="w-full bg-slate-700">
+    <div className="w-full min-h-screen bg-slate-700">
       <Header />
-      <DocsContainer docs={userDocs} />
+      <DocsContainer docs={docs} />
     </div>
   );
 };

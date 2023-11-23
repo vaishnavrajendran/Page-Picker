@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
+import { uploadFile } from "@/lib/requests";
+import { getUser } from "@/providers/userProvider";
 import {
   Dialog,
   DialogContent,
@@ -19,13 +21,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { uploadFile } from "@/lib/requests";
+import { getDocs } from "@/providers/DocsProvider";
 
-// FileUploadModal component
 const FileUploadModal = ({ openUploadModal, closeModal }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [displayError, setDisplayError] = useState(false);
   const [selectedFile, setSelectedFile] = useState("");
+  const { userId } = getUser();
+  const { pushDocs } = getDocs();
   const router = useRouter();
 
   useEffect(() => {
@@ -42,8 +45,14 @@ const FileUploadModal = ({ openUploadModal, closeModal }) => {
 
   const onSubmit = async (values) => {
     if (values.file[0].type === "application/pdf") {
-      uploadFile(values)
-      console.log("VALUE", values);
+      const file = values.file[0];
+      const formData = new FormData();
+      formData.append("file", file);
+      const data = await uploadFile(userId, formData);
+      pushDocs(data)
+      form.reset();
+      router.refresh();
+      closeModal();
     }
   };
 

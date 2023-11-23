@@ -1,30 +1,27 @@
-import React, { useState } from "react";
-import { Plus } from "lucide-react";
-import FileUploadModal from "../Modals/fileUploadModal";
+import React from "react";
+import UploadDocs from "../UploadDocs";
 
 const DocsContainer = ({ docs }) => {
-  const [openUploadModal, setOpenUploadModal] = useState(false);
-
-  const closeModal = () => {
-    setOpenUploadModal((prev) => !prev);
-  };
+  if (!docs) return null;
 
   return (
-    <div className="w-full px-12 py-8">
+    <div className="flex gap-4 flex-wrap w-full justify-center py-8">
       {docs.map((doc, i) => (
-        <div key={i}>{doc}</div>
+        <div
+          key={i}
+          className="flex flex-col w-60 h-80 bg-slate-400 cursor-pointer p-2"
+        >
+          <div className="flex items-center justify-center overflow-hidden h-72">
+            <img
+              src={`http://localhost:8080/${doc.imagePath}`}
+              alt={doc.fileName}
+              className=" object-cover"
+            />
+          </div>
+          <div className="text-center mt-2">{doc.fileName}</div>
+        </div>
       ))}
-      <div className="relative flex flex-col items-center justify-center p-2 mt-2 rounded-md bg-background/10 w-28 h-24">
-        <Plus
-          className="h-10 w-10 fill-indigo-200 stroke-indigo-400 cursor-pointer"
-          onClick={() => setOpenUploadModal(true)}
-        />
-        <a href="">Add</a>
-      </div>
-      <FileUploadModal
-        openUploadModal={openUploadModal}
-        closeModal={closeModal}
-      />
+      <UploadDocs />
     </div>
   );
 };

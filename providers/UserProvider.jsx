@@ -13,7 +13,7 @@ export const getUser = () => {
 export const UserProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState({});
   const { user } = useClerk();
-
+  const id = user?.id
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
@@ -24,7 +24,7 @@ export const UserProvider = ({ children }) => {
     };
 
     fetchData();
-  }, [user]);
+  }, [id]);
 
   return (
     <UserContext.Provider value={currentUser}>{children}</UserContext.Provider>

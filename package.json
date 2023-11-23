@@ -19,13 +19,13 @@
     "clsx": "^2.0.0",
     "lucide-react": "^0.292.0",
     "next": "14.0.3",
+    "node-loader": "^2.0.0",
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.48.2",
+    "react-pdf": "^7.5.1",
     "tailwind-merge": "^2.0.0",
-    "tailwindcss-animate": "^1.0.7",
-    "zod": "^3.22.4",
-    "zustand": "^4.4.6"
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
     "autoprefixer": "^10.0.1",
