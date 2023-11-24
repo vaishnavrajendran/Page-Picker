@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Plus } from "lucide-react";
-import FileUploadModal from "../Modals/FileUploadModal";
+import FileUploadModal from "@/components/Modals/FileUploadModal";
 
 const UploadDocs = () => {
   const [openUploadModal, setOpenUploadModal] = useState(false);
@@ -16,7 +16,7 @@ const UploadDocs = () => {
       >
         <Plus className="h-8 w-8 fill-indigo-200 stroke-indigo-400 cursor-pointer" />
         <a href="#" className="mt-2 text-sm text-indigo-500">
-          Add 
+          Add
         </a>
       </div>
       <FileUploadModal

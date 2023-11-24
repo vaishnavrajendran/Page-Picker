@@ -1,24 +1,13 @@
 import React from "react";
 import { useState } from "react";
-import OpenPdfModal from "../Modals/OpenPdfModal";
+import { useRouter } from "next/navigation";
 
 const MapDocs = ({ docs }) => {
-  const [openPdf, setOpenPdf] = useState(false);
   const [selectedPdf, setSelectedPdf] = useState(docs[0]);
-
-  const handleOpenClosePdf = (e) => {
-    console.log("Hii");
-    setOpenPdf((prev) => !prev);
-  };
-
-  const setPdf = async (doc) => {
-    console.log("DOC", doc);
-    setSelectedPdf(doc);
-    return Promise.resolve();
-  };
+  const router = useRouter();
 
   const handleClick = (doc) => {
-    setPdf(doc).then(() => handleOpenClosePdf());
+    router.push(`/user/?id=${doc._id}`);
   };
 
   return (
@@ -39,11 +28,11 @@ const MapDocs = ({ docs }) => {
           <div className="text-center mt-2">{doc.fileName}</div>
         </div>
       ))}
-      <OpenPdfModal
+      {/* <OpenPdfModal
         openPdf={openPdf}
         handleOpenClosePdf={handleOpenClosePdf}
         selectedPdf={selectedPdf}
-      />
+      /> */}
     </>
   );
 };
