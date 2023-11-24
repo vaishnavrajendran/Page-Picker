@@ -16,7 +16,7 @@ const UploadDocs = () => {
       >
         <Plus className="h-8 w-8 fill-indigo-200 stroke-indigo-400 cursor-pointer" />
         <a href="#" className="mt-2 text-sm text-indigo-500">
-          Add
+          Add 
         </a>
       </div>
       <FileUploadModal
