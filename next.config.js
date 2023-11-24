@@ -6,6 +6,7 @@
 // next.config.js
 module.exports = {
   webpack: (config, { isServer }) => {
+    config.resolve.alias.canvas = false;
     // Add a rule for handling binary files
     config.module.rules.push({
       test: /\.node$/,
