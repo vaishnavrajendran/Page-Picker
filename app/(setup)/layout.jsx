@@ -3,7 +3,7 @@ import React from "react";
 
 const MainLayout = ({ children }) => {
   return (
-    <div>
+    <div className="min-h-screen bg-slate-700">
       <Header />
       <main>{children}</main>
     </div>
