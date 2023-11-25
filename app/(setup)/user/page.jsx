@@ -13,6 +13,7 @@ const SelectPage = () => {
   const id = searchParams.get("id");
   const [selectedDoc, setSelectedDoc] = useState();
   const [numPages, setNumPages] = useState(1);
+  const [selectedPages, setSelectedPages] = useState([]);
 
   const { docs } = getDocs();
 
@@ -29,6 +30,13 @@ const SelectPage = () => {
 
   const onDocLoadSuccess = ({ numPages }) => {
     setNumPages(numPages);
+    setSelectedPages(Array.from({ length: numPages }, () => false));
+  };
+
+  const handleCheckboxChange = (index) => {
+    const newSelectedPages = [...selectedPages];
+    newSelectedPages[index] = !newSelectedPages[index];
+    setSelectedPages(newSelectedPages);
   };
 
   if (!selectedDoc) return null;
@@ -44,9 +52,18 @@ const SelectPage = () => {
           <div className="flex flex-col md:flex-row w-full gap-3 md:justify-start sm:justify-center sm:items-center">
             {Array.apply(null, Array(numPages))
               .map((x, i) => i + 1)
-              .map((page) => {
+              .map((page, i) => {
                 return (
-                  <div className="">
+                  <div
+                    key={i}
+                    className="relative"
+                    onClick={() => handleCheckboxChange(i)}
+                  >
+                    <input
+                      type="checkbox"
+                      className="page-checkbox scale-150"
+                      checked={selectedPages[i]}
+                    />
                     <Page
                       pageNumber={page}
                       width={250}
