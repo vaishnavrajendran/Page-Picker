@@ -2,7 +2,9 @@
 import React, { useState, useEffect } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import { useSearchParams } from "next/navigation";
+import { DragDropContext, Draggable } from "react-beautiful-dnd";
 
+import { StrictModeDroppable as Droppable } from "@/lib/strictModeDroppable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getDocs } from "@/providers/DocsProvider";
 
@@ -39,6 +41,21 @@ const SelectPage = () => {
     setSelectedPages(newSelectedPages);
   };
 
+  const handleDragEnd = (result) => {
+    // Check if the item was dropped inside the droppable area
+    if (!result.destination) {
+      return;
+    }
+
+    // Reorder the pages based on the drag-and-drop result
+    const updatedPages = Array.from(selectedPages);
+    const [draggedPage] = updatedPages.splice(result.source.index, 1);
+    updatedPages.splice(result.destination.index, 0, draggedPage);
+
+    // Update the state with the new order of pages
+    setSelectedPages(updatedPages);
+  };
+
   if (!selectedDoc) return null;
 
   return (
@@ -49,33 +66,46 @@ const SelectPage = () => {
           file={`${process.env.NEXT_PUBLIC_SERVER_BASEURL}/${selectedDoc.path}`}
           onLoadSuccess={onDocLoadSuccess}
         >
-          <div className="flex flex-col md:flex-row w-full gap-3 md:justify-start sm:justify-center sm:items-center">
-            {Array.apply(null, Array(numPages))
-              .map((x, i) => i + 1)
-              .map((page, i) => {
-                return (
-                  <div
-                    key={i}
-                    className="relative"
-                    onClick={() => handleCheckboxChange(i)}
-                  >
-                    <input
-                      type="checkbox"
-                      className="page-checkbox scale-150"
-                      checked={selectedPages[i]}
-                    />
-                    <Page
-                      pageNumber={page}
-                      width={250}
-                      height={500}
-                      scale={1.5}
-                      renderAnnotationLayer={false}
-                      renderTextLayer={false}
-                    />
-                  </div>
-                );
-              })}
-          </div>
+          <DragDropContext onDragEnd={handleDragEnd}>
+            <Droppable droppableId="docs" direction="horizontal">
+              {(provided) => (
+                <div
+                  className="flex flex-row w-full gap-3 md:justify-start sm:justify-center sm:items-center"
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {Array.apply(null, Array(numPages)).map((x, i) => (
+                    <Draggable key={i} draggableId={`page-${i}`} index={i}>
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          className="relative"
+                          onClick={() => handleCheckboxChange(i)}
+                        >
+                          <input
+                            type="checkbox"
+                            className="page-checkbox scale-150"
+                            checked={selectedPages[i]}
+                          />
+                          <Page
+                            pageNumber={i + 1}
+                            width={250}
+                            height={500}
+                            scale={1.5}
+                            renderAnnotationLayer={false}
+                            renderTextLayer={false}
+                          />
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
         </Document>
       </ScrollArea>
     </div>
