@@ -15,6 +15,7 @@ const SelectPage = () => {
   const id = searchParams.get("id");
   const [selectedDoc, setSelectedDoc] = useState();
   const [numPages, setNumPages] = useState(1);
+  const [pageOrder, setPageOrder] = useState([]);
   const [selectedPages, setSelectedPages] = useState([]);
 
   const { docs } = getDocs();
@@ -30,10 +31,12 @@ const SelectPage = () => {
     setSelectedDoc(currentDoc[0]);
   }, [docs]);
 
-  const onDocLoadSuccess = ({ numPages }) => {
-    setNumPages(numPages);
+  useEffect(() => {
+    // Create an array of numbers representing page order
+    setPageOrder(Array.from({ length: numPages }, (_, index) => index + 1));
+    // Initialize selectedPages with false values for checkboxes
     setSelectedPages(Array.from({ length: numPages }, () => false));
-  };
+  }, [numPages]);
 
   const handleCheckboxChange = (index) => {
     const newSelectedPages = [...selectedPages];
@@ -48,49 +51,64 @@ const SelectPage = () => {
     }
 
     // Reorder the pages based on the drag-and-drop result
-    const updatedPages = Array.from(selectedPages);
-    const [draggedPage] = updatedPages.splice(result.source.index, 1);
-    updatedPages.splice(result.destination.index, 0, draggedPage);
+    const updatedOrder = Array.from(pageOrder);
+    updatedOrder.splice(result.source.index, 1);
+    const index = +result.draggableId?.split("-").pop();
+    updatedOrder.splice(result.destination.index, 0, index);
 
     // Update the state with the new order of pages
-    setSelectedPages(updatedPages);
+    setPageOrder(updatedOrder);
   };
 
   if (!selectedDoc) return null;
 
   return (
     <div className="overflow-hidden px-4 md:px-10 py-4">
-      <style>{styles}</style>
+      <style>
+        {`
+          .react-pdf__Page {
+            background-color: transparent !important;
+          }
+        `}
+      </style>
       <ScrollArea>
+        <p className="text-white text-center">
+          Select the pages you want to extract and drag and drop the pages to
+          rearrange
+        </p>
         <Document
           file={`${process.env.NEXT_PUBLIC_SERVER_BASEURL}/${selectedDoc.path}`}
-          onLoadSuccess={onDocLoadSuccess}
+          onLoadSuccess={({ numPages }) => setNumPages(numPages)}
         >
           <DragDropContext onDragEnd={handleDragEnd}>
             <Droppable droppableId="docs" direction="horizontal">
               {(provided) => (
                 <div
-                  className="flex flex-row w-full gap-3 md:justify-start sm:justify-center sm:items-center"
+                  className="flex flex-row flex-wrap justify-center items-center gap-3"
                   {...provided.droppableProps}
                   ref={provided.innerRef}
                 >
-                  {Array.apply(null, Array(numPages)).map((x, i) => (
-                    <Draggable key={i} draggableId={`page-${i}`} index={i}>
+                  {pageOrder.map((pageNumber, index) => (
+                    <Draggable
+                      key={pageNumber}
+                      draggableId={`page-${pageNumber}`}
+                      index={index}
+                    >
                       {(provided) => (
                         <div
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className="relative"
-                          onClick={() => handleCheckboxChange(i)}
+                          className="relative mb-3"
+                          onClick={() => handleCheckboxChange(index)}
                         >
                           <input
                             type="checkbox"
                             className="page-checkbox scale-150"
-                            checked={selectedPages[i]}
+                            checked={selectedPages[index]}
                           />
                           <Page
-                            pageNumber={i + 1}
+                            pageNumber={pageNumber}
                             width={250}
                             height={500}
                             scale={1.5}
