@@ -1,9 +1,7 @@
 import React from "react";
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const MapDocs = ({ docs }) => {
-  const [selectedPdf, setSelectedPdf] = useState(docs[0]);
   const router = useRouter();
 
   const handleClick = (doc) => {
@@ -28,11 +26,6 @@ const MapDocs = ({ docs }) => {
           <div className="text-center mt-2">{doc.fileName}</div>
         </div>
       ))}
-      {/* <OpenPdfModal
-        openPdf={openPdf}
-        handleOpenClosePdf={handleOpenClosePdf}
-        selectedPdf={selectedPdf}
-      /> */}
     </>
   );
 };

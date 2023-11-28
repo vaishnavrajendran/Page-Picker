@@ -7,6 +7,8 @@ import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import { StrictModeDroppable as Droppable } from "@/lib/strictModeDroppable";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getDocs } from "@/providers/DocsProvider";
+import { Button } from "@/components/ui/button";
+import { sendReArrangeData } from "@/lib/requests";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
 
@@ -16,15 +18,10 @@ const SelectPage = () => {
   const [selectedDoc, setSelectedDoc] = useState();
   const [numPages, setNumPages] = useState(1);
   const [pageOrder, setPageOrder] = useState([]);
-  const [selectedPages, setSelectedPages] = useState([]);
+  const [selectedPages, setSelectedPages] = useState({});
+  const [disabled, setDisabled] = useState(false);
 
   const { docs } = getDocs();
-
-  const styles = `
-  .react-pdf__Page {
-    background-color: transparent !important;
-  }
-`;
 
   useEffect(() => {
     const currentDoc = docs.filter((doc) => doc._id === id);
@@ -34,14 +31,33 @@ const SelectPage = () => {
   useEffect(() => {
     // Create an array of numbers representing page order
     setPageOrder(Array.from({ length: numPages }, (_, index) => index + 1));
-    // Initialize selectedPages with false values for checkboxes
-    setSelectedPages(Array.from({ length: numPages }, () => false));
   }, [numPages]);
 
+  //removing inbuilt background colour of react-pdf
+  const styles = `
+  .react-pdf__Page {
+    background-color: transparent !important;
+  }
+`;
+
+  const handleSubmit = async () => {
+    setDisabled(true);
+    const data = await sendReArrangeData(
+      id,
+      pageOrder,
+      selectedPages,
+      selectedDoc.path
+    );
+    setDisabled(false);
+  };
+
   const handleCheckboxChange = (index) => {
-    const newSelectedPages = [...selectedPages];
-    newSelectedPages[index] = !newSelectedPages[index];
-    setSelectedPages(newSelectedPages);
+    setSelectedPages((prevSelectedPages) => {
+      const newSelectedPages = { ...prevSelectedPages };
+      const pageNumber = pageOrder[index];
+      newSelectedPages[pageNumber] = !newSelectedPages[pageNumber];
+      return newSelectedPages;
+    });
   };
 
   const handleDragEnd = (result) => {
@@ -56,7 +72,6 @@ const SelectPage = () => {
     const index = +result.draggableId?.split("-").pop();
     updatedOrder.splice(result.destination.index, 0, index);
 
-    // Update the state with the new order of pages
     setPageOrder(updatedOrder);
   };
 
@@ -72,10 +87,15 @@ const SelectPage = () => {
         `}
       </style>
       <ScrollArea>
-        <p className="text-white text-center">
+        <p className="text-white text-center mb-2 p-1">
           Select the pages you want to extract and drag and drop the pages to
-          rearrange
+          rearrange. Note: Only selected pages will be extracted and reordered
         </p>
+        <div className="flex justify-end mb-3 p-2">
+          <Button disabled={disabled} onClick={handleSubmit}>
+            {disabled ? "Extracting....." : "Extract/Rearrange"}
+          </Button>
+        </div>
         <Document
           file={`${process.env.NEXT_PUBLIC_SERVER_BASEURL}/${selectedDoc.path}`}
           onLoadSuccess={({ numPages }) => setNumPages(numPages)}
@@ -105,7 +125,8 @@ const SelectPage = () => {
                           <input
                             type="checkbox"
                             className="page-checkbox scale-150"
-                            checked={selectedPages[index]}
+                            checked={selectedPages[pageNumber]}
+                            readOnly
                           />
                           <Page
                             pageNumber={pageNumber}
