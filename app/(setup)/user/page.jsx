@@ -4,7 +4,7 @@ import { Document, Page, pdfjs } from "react-pdf";
 import { useSearchParams } from "next/navigation";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 
-import { StrictModeDroppable as Droppable } from "@/lib/strictModeDroppable";
+import { StrictModeDroppable as Droppable } from "@/lib/strictModeDroppable"; //importing custom created droppable to avoid react-18 bugs
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getDocs } from "@/providers/DocsProvider";
 import { Button } from "@/components/ui/button";
@@ -20,6 +20,7 @@ const SelectPage = () => {
   const [pageOrder, setPageOrder] = useState([]);
   const [selectedPages, setSelectedPages] = useState({});
   const [disabled, setDisabled] = useState(false);
+  const [downloadLink, setDownloadLink] = useState("");
 
   const { docs } = getDocs();
 
@@ -40,6 +41,15 @@ const SelectPage = () => {
   }
 `;
 
+  const handleCheckboxChange = (index) => {
+    setSelectedPages((prevSelectedPages) => {
+      const newSelectedPages = { ...prevSelectedPages };
+      const pageNumber = pageOrder[index];
+      newSelectedPages[pageNumber] = !newSelectedPages[pageNumber];
+      return newSelectedPages;
+    });
+  };
+
   const handleSubmit = async () => {
     setDisabled(true);
     const data = await sendReArrangeData(
@@ -49,15 +59,24 @@ const SelectPage = () => {
       selectedDoc.path
     );
     setDisabled(false);
+    setDownloadLink(data.downloadLink);
   };
 
-  const handleCheckboxChange = (index) => {
-    setSelectedPages((prevSelectedPages) => {
-      const newSelectedPages = { ...prevSelectedPages };
-      const pageNumber = pageOrder[index];
-      newSelectedPages[pageNumber] = !newSelectedPages[pageNumber];
-      return newSelectedPages;
-    });
+  const handleDownload = async () => {
+    try {
+      window.open(downloadLink, "_blank");
+      const response = await fetch(downloadLink);
+      const blob = await response.blob();
+
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = "modified.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (error) {
+      console.error("Error downloading the file:", error);
+    }
   };
 
   const handleDragEnd = (result) => {
@@ -91,10 +110,11 @@ const SelectPage = () => {
           Select the pages you want to extract and drag and drop the pages to
           rearrange. Note: Only selected pages will be extracted and reordered
         </p>
-        <div className="flex justify-end mb-3 p-2">
+        <div className="flex justify-end mb-3 p-2 gap-2">
           <Button disabled={disabled} onClick={handleSubmit}>
             {disabled ? "Extracting....." : "Extract/Rearrange"}
           </Button>
+          {downloadLink && <Button onClick={handleDownload}>Download</Button>}
         </div>
         <Document
           file={`${process.env.NEXT_PUBLIC_SERVER_BASEURL}/${selectedDoc.path}`}
