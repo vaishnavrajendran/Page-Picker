@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { getDocs } from "@/providers/DocsProvider";
+import { getDocs } from "@/components/providers/DocsProvider";
 import { sendReArrangeData } from "@/lib/requests";
 import PagesMap from "@/components/PagesMap";
 import SubHeader from "@/components/SubHeader";

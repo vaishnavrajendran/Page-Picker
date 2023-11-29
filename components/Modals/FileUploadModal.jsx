@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
 import { uploadFile } from "@/lib/requests";
-import { getUser } from "@/providers/userProvider";
 import {
   Dialog,
   DialogContent,
@@ -21,7 +20,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { getDocs } from "@/providers/DocsProvider";
+import { getUser } from "@/components/providers/UserProvider";
+import { getDocs } from "@/components/providers/DocsProvider";
 
 const FileUploadModal = ({ openUploadModal, closeModal }) => {
   const [isMounted, setIsMounted] = useState(false);

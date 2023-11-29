@@ -1,8 +1,8 @@
 import { Open_Sans } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import "./globals.css";
-import { UserProvider } from "@/providers/userProvider";
-import { DocsProvider } from "@/providers/DocsProvider";
+import { UserProvider } from "@/components/providers/UserProvider";
+import { DocsProvider } from "@/components/providers/DocsProvider";
 
 const open_sans = Open_Sans({ subsets: ["latin"] });
 
