@@ -32,7 +32,7 @@ const SelectPage = () => {
     ) {
       setWarning(true);
     } else {
-      setWarning((prev) => !prev);
+      setWarning(false);
       setDisabled(true);
       const data = await sendReArrangeData(
         id,
@@ -57,6 +57,7 @@ const SelectPage = () => {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+      setDownloadLink("");
     } catch (error) {
       console.error("Error downloading the file:", error);
     }
