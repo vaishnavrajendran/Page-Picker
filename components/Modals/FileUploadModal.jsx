@@ -20,14 +20,14 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { getUser } from "@/components/providers/UserProvider";
+import { useUserData } from "@/components/providers/UserProvider";
 import { useDocs } from "@/components/providers/DocsProvider";
 
 const FileUploadModal = ({ openUploadModal, closeModal }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [displayError, setDisplayError] = useState(false);
   const [selectedFile, setSelectedFile] = useState("");
-  const { userId } = getUser();
+  const { userId } = useUserData();
   const { pushDocs } = useDocs();
   const router = useRouter();
 

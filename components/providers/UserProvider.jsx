@@ -6,7 +6,7 @@ import { loadUser } from "@/lib/requests";
 
 const UserContext = createContext();
 
-export const getUser = () => {
+export const useUserData = () => {
   return useContext(UserContext);
 };
 
