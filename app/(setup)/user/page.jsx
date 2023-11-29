@@ -20,8 +20,6 @@ const SelectPage = () => {
 
   const { docs } = useDocs();
 
-  console.log(">>>>>>>", selectedPages);
-
   useEffect(() => {
     const currentDoc = docs.filter((doc) => doc._id === id);
     setSelectedDoc(currentDoc[0]);
