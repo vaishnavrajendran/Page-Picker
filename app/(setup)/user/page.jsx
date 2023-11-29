@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { getDocs } from "@/components/providers/DocsProvider";
+import { useDocs } from "@/components/providers/DocsProvider";
 import { sendReArrangeData } from "@/lib/requests";
 import PagesMap from "@/components/PagesMap";
 import SubHeader from "@/components/SubHeader";
@@ -17,7 +17,7 @@ const SelectPage = () => {
   const [disabled, setDisabled] = useState(false);
   const [downloadLink, setDownloadLink] = useState("");
 
-  const { docs } = getDocs();
+  const { docs } = useDocs();
 
   useEffect(() => {
     const currentDoc = docs.filter((doc) => doc._id === id);

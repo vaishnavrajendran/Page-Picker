@@ -21,14 +21,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { getUser } from "@/components/providers/UserProvider";
-import { getDocs } from "@/components/providers/DocsProvider";
+import { useDocs } from "@/components/providers/DocsProvider";
 
 const FileUploadModal = ({ openUploadModal, closeModal }) => {
   const [isMounted, setIsMounted] = useState(false);
   const [displayError, setDisplayError] = useState(false);
   const [selectedFile, setSelectedFile] = useState("");
   const { userId } = getUser();
-  const { pushDocs } = getDocs();
+  const { pushDocs } = useDocs();
   const router = useRouter();
 
   useEffect(() => {

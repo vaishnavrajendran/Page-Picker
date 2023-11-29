@@ -1,10 +1,10 @@
 "use client";
 import MapDocs from "@/components/MapDocs";
 import UploadDocs from "@/components/UploadDocs";
-import { getDocs } from "@/components/providers/DocsProvider";
+import { useDocs } from "@/components/providers/DocsProvider";
 
 export default function Home() {
-  const { docs } = getDocs();
+  const { docs } = useDocs();
   if (!docs) return null;
 
   return (

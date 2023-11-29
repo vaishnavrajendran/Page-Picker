@@ -6,7 +6,7 @@ import { getUserDocs } from "@/lib/requests";
 
 const DocsContext = createContext();
 
-export const getDocs = () => {
+export const useDocs = () => {
   return useContext(DocsContext);
 };
 
