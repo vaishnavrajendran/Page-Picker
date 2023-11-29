@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DragDropContext, Draggable } from "react-beautiful-dnd";
 import { Document, Page, pdfjs } from "react-pdf";
 
+//react-18 strict-mode have issues with react-dnd, so wrote the custom Droppable
 import { StrictModeDroppable as Droppable } from "@/lib/strictModeDroppable";
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/legacy/build/pdf.worker.min.js`;
@@ -16,7 +17,7 @@ const PagesMap = ({
   const [numPages, setNumPages] = useState(1);
 
   useEffect(() => {
-    // Create an array of numbers representing page order
+    // Creating an array of numbers representing page order
     setPageOrder(Array.from({ length: numPages }, (_, index) => index + 1));
   }, [numPages]);
 
@@ -37,7 +38,7 @@ const PagesMap = ({
   };
 
   const handleDragEnd = (result) => {
-    // Check if the item was dropped inside the droppable area
+    // Check if the item was dropped inside the droppable area(placeholder)
     if (!result.destination) {
       return;
     }

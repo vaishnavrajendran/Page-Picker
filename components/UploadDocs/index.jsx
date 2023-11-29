@@ -8,6 +8,7 @@ const UploadDocs = () => {
   const closeModal = () => {
     setOpenUploadModal((prev) => !prev);
   };
+
   return (
     <>
       <div

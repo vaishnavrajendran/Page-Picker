@@ -28,7 +28,7 @@ const SelectPage = () => {
   const handleSubmit = async () => {
     if (
       Object.keys(selectedPages).length === 0 ||
-      !Object.values(selectedPages).some((value) => value === true)
+      !Object.values(selectedPages).some((value) => value === true) //validation, to ensure atleast one page is selected to extract
     ) {
       setWarning(true);
     } else {
