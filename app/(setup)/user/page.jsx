@@ -16,6 +16,7 @@ const SelectPage = () => {
   const [selectedPages, setSelectedPages] = useState({});
   const [disabled, setDisabled] = useState(false);
   const [downloadLink, setDownloadLink] = useState("");
+  const [warning, setWarning] = useState(false);
 
   const { docs } = useDocs();
 
@@ -25,15 +26,20 @@ const SelectPage = () => {
   }, [docs]);
 
   const handleSubmit = async () => {
-    setDisabled(true);
-    const data = await sendReArrangeData(
-      id,
-      pageOrder,
-      selectedPages,
-      selectedDoc.path
-    );
-    setDisabled(false);
-    setDownloadLink(data.downloadLink);
+    if (Object.keys(selectedPages).length === 0) {
+      setWarning(true);
+    } else {
+      setWarning((prev) => !prev);
+      setDisabled(true);
+      const data = await sendReArrangeData(
+        id,
+        pageOrder,
+        selectedPages,
+        selectedDoc.path
+      );
+      setDisabled(false);
+      setDownloadLink(data.downloadLink);
+    }
   };
 
   const handleDownload = async () => {
@@ -63,6 +69,7 @@ const SelectPage = () => {
           downloadLink={downloadLink}
           handleSubmit={handleSubmit}
           handleDownload={handleDownload}
+          warning={warning}
         />
         <PagesMap
           selectedDoc={selectedDoc}

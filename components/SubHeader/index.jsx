@@ -6,6 +6,7 @@ const SubHeader = ({
   downloadLink,
   handleSubmit,
   handleDownload,
+  warning,
 }) => {
   return (
     <>
@@ -19,6 +20,11 @@ const SubHeader = ({
         </Button>
         {downloadLink && <Button onClick={handleDownload}>Download</Button>}
       </div>
+      {warning && (
+        <p className="text-red-500 text-center mb-2 p-1">
+          Select atleast one page
+        </p>
+      )}
     </>
   );
 };
