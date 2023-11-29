@@ -49,7 +49,7 @@ const FileUploadModal = ({ openUploadModal, closeModal }) => {
       const formData = new FormData();
       formData.append("file", file);
       const data = await uploadFile(userId, formData);
-      pushDocs(data)
+      pushDocs(data);
       form.reset();
       router.refresh();
       closeModal();
