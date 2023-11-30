@@ -1,4 +1,4 @@
-#### For running locally go to the bottom of this page
+#### For running locally, go to the bottom of this page
 
 ## While opening the page, the site will be redirected to clerk authentication
 ![Screenshot 2023-11-29 233325](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/bd8d9db4-9c8b-4c09-9d98-6685b9098278)
