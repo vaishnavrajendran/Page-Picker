@@ -49,6 +49,7 @@
 ## Scope of improvements for the app:
 
    - Add debouncing for the backend api's
+   - Lazy loading
    - Uploading the pdf's to other servers like s3 bucket
    - Creating a seperate page to view the modified documents
    - If not create a cron to delete the modified documents from the server
