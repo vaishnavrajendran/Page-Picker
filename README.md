@@ -1,3 +1,5 @@
+#### For running locally go to the bottom of this page
+
 ## While opening the page the site will be redirected to clerk authentication
 ![Screenshot 2023-11-29 233325](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/bd8d9db4-9c8b-4c09-9d98-6685b9098278)
 ## After succesfull login , click on the plus icon, a modal will openup to upload the pdf.Only pdf files will be able to upload. Implemented front end and backend validation.
@@ -13,7 +15,7 @@
 ## When clicking on the download button. The new pdf will be opened in the new tab and it will ask the permission to choose the download location.
 ![Screenshot 2023-11-29 232646](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/8bbcc7ca-2f41-4e1e-ae60-3b47c0fc144d)
 
-## Running the Application Locally
+## Running the Application Locally:
 
 ### 1. Clone the Repositories
 - [Page Picker Repository](https://github.com/vaishnavrajendran/Page-Picker)
