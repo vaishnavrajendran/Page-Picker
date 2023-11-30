@@ -12,3 +12,28 @@
 ![Screenshot 2023-11-29 232607](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/8a0707bf-4138-4940-b3eb-904c191f44ef)
 ## When clicking on the download button. The new pdf will be opened in the new tab and it will ask the permission to choose the download location.
 ![Screenshot 2023-11-29 232646](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/8bbcc7ca-2f41-4e1e-ae60-3b47c0fc144d)
+
+## To run the application locally:
+1>> Clone the repositories : 
+  Page-Picker: https://github.com/vaishnavrajendran/Page-Picker
+  Page-Picker-Server: https://github.com/vaishnavrajendran/Page-Picker-Server
+2>> Add the necessary env's :
+  For Page-Picker:
+    Go to clerk website : https://clerk.com/ . Click on create an application and copy the two api keys. (NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY & CLERK_SECRET_KEY)
+    Copy and paste this common env's:
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/
+    NEXT_PUBLIC_SERVER_BASEURL=http://localhost:8080  (Backend localhost address)
+  
+    Do npm install and npm run dev
+
+  For Page-Picker-Server:
+    PORT=8080
+    MONGO_URL: //Add your mongodb atlas url
+    SERVER_URL: http://localhost:8080
+
+    Do npm install and npm startz
+    
+If any queries feel free to reachout me on vaishnavrajendran95@gmail.com or https://www.linkedin.com/in/vaishnav-r-b7b933195/
