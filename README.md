@@ -1,12 +1,12 @@
 #### For running locally go to the bottom of this page
 
-## While opening the page the site will be redirected to clerk authentication
+## While opening the page, the site will be redirected to clerk authentication
 ![Screenshot 2023-11-29 233325](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/bd8d9db4-9c8b-4c09-9d98-6685b9098278)
 ## After succesfull login , click on the plus icon, a modal will openup to upload the pdf.Only pdf files will be able to upload. Implemented front end and backend validation.
 ![Screenshot 2023-11-29 232226](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/98a3a9e0-f809-40db-9a0d-3a0ff0fb8b3b)
 ## After uploading the pdf, 1st page of the pdf is extracted and a thumbnail image is created. This image will be displayed instead of loading all the pdf files of the user.
 ![Screenshot 2023-11-29 232328](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/cba14c82-ccb3-4021-a22c-f67d6e02a169)
-## When clicking on the thumbnail another page will be opened and this page displays all pages of the pdf. Here we can extract and rearrange the pdf by drag and dropping.
+## When clicking on the thumbnail, another page will be opened and this page displays all pages of the pdf. Here we can extract and rearrange the pdf by ##drag and dropping.
 ![Screenshot 2023-11-29 232437](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/8e74cdb7-c9cc-4cb4-91c0-ac9cb3bec8c5)
 ## Only selected pages will be extracted and the new pdf will be in the order how it is arranged by drag and dropping. Click on the rearrange or extract button to generate the download link.You have to select atleast one page to generate the downaload link.
 ![Screenshot 2023-11-29 232536](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/a120df72-30ed-4de0-b03d-f849ad384ffb)
@@ -43,5 +43,12 @@
   - `SERVER_URL: http://localhost:8080`
 
     Do npm install and npm start
+
+## Scope of improvements for the app:
+
+   - Add debouncing for the backend api's
+   - Uploading the pdf's to other servers like s3 bucket
+   - Creating a seperate page to view the modified documents
+   - If not create a cron to delete the modified documents from the server
     
-#### If any queries feel free to reachout me on vaishnavrajendran95@gmail.com or https://www.linkedin.com/in/vaishnav-r-b7b933195/
+#### If any queries, feel free to reachout me on vaishnavrajendran95@gmail.com or https://www.linkedin.com/in/vaishnav-r-b7b933195/
