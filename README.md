@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#### Visit Page Picker at https://page-picker.vercel.app/
 
-## Getting Started
+#### For running locally, go to the bottom of this page
 
-First, run the development server:
+## While opening the page, the site will be redirected to clerk authentication
+![Screenshot 2023-11-29 233325](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/bd8d9db4-9c8b-4c09-9d98-6685b9098278)
+## After succesfull login , click on the plus icon, a modal will openup to upload the pdf.Only pdf files will be able to upload. Implemented front end and backend validation.
+![Screenshot 2023-11-29 232226](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/98a3a9e0-f809-40db-9a0d-3a0ff0fb8b3b)
+## After uploading the pdf, 1st page of the pdf is extracted and a thumbnail image is created. This image will be displayed instead of loading all the pdf files of the user.
+![Screenshot 2023-11-29 232328](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/cba14c82-ccb3-4021-a22c-f67d6e02a169)
+## When clicking on the thumbnail, another page will be opened and this page displays all pages of the pdf. Here we can extract and rearrange the pdf by ##drag and dropping.
+![Screenshot 2023-11-29 232437](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/8e74cdb7-c9cc-4cb4-91c0-ac9cb3bec8c5)
+## Only selected pages will be extracted and the new pdf will be in the order how it is arranged by drag and dropping. Click on the rearrange or extract button to generate the download link.You have to select atleast one page to generate the downaload link.
+![Screenshot 2023-11-29 232536](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/a120df72-30ed-4de0-b03d-f849ad384ffb)
+## Then a download button will come near the extract page button.
+![Screenshot 2023-11-29 232607](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/8a0707bf-4138-4940-b3eb-904c191f44ef)
+## When clicking on the download button. The new pdf will be opened in the new tab and it will ask the permission to choose the download location.
+![Screenshot 2023-11-29 232646](https://github.com/vaishnavrajendran/Page-Picker/assets/113851217/8bbcc7ca-2f41-4e1e-ae60-3b47c0fc144d)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Running the Application Locally:
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1. Clone the Repositories
+- [Page Picker Repository](https://github.com/vaishnavrajendran/Page-Picker)
+- [Page Picker Server Repository](https://github.com/vaishnavrajendran/Page-Picker-Server)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 2. Set Up Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+#### For Page Picker:
 
-## Learn More
+1. Go to the Clerk website: [Clerk](https://clerk.com/). Create an application and copy the two API keys:
+   - `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY`
+   - `CLERK_SECRET_KEY`
+2. Add the following common environment variables:
+   - `NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in`
+   - `NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up`
+   - `NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/`
+   - `NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/`
+   - `NEXT_PUBLIC_SERVER_BASEURL=http://localhost:8080`    (Backend localhost address)
 
-To learn more about Next.js, take a look at the following resources:
+     Do npm install and npm run dev
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+#### For Page-Picker-Server 
+  - `PORT=8080`
+  - `MONGO_URL: //Add your mongodb atlas url`
+  - `SERVER_URL: http://localhost:8080`
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+    Do npm install and npm start
 
-## Deploy on Vercel
+## Scope of improvements for the app:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   - Add debouncing for the backend api's
+   - Lazy loading
+   - Uploading the pdf's to other servers like s3 bucket
+   - Creating a seperate page to view the modified documents
+   - If not create a cron to delete the modified documents from the server
+    
+#### If any queries, feel free to reachout me on vaishnavrajendran95@gmail.com or https://www.linkedin.com/in/vaishnav-r-b7b933195/
